@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:orientation="vertical"
+    tools:context="com.andack.croputils.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/ToolBar"
+        android:background="@color/colorPrimary"
+        toolbar:theme="@style/ToolbarTheme"
+        toolbar:title="@string/app_name"
+        toolbar:titleTextColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/ImageView"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <Button
+        android:id="@+id/choosePicture"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/choosePicZh" />
+    <Button
+        android:id="@+id/cutPicBtn"
+        android:background="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        android:text="@string/suit_cut"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
