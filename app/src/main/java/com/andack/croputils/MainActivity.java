@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -46,19 +47,27 @@ public class MainActivity extends AppCompatActivity {
     private EditText yValue;
     private static int xCut;
     private static int yCut;
+    private View view;
 //    private View view;
     private List<ImagePiece> pieces=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initToolBar();
         initView();
     }
 
     private void initToolBar() {
+        view=findViewById(R.id.shadow_view);
         toolbar= (Toolbar) findViewById(R.id.ToolBar);
         toolbar.inflateMenu(R.menu.choose_menu);
+        if (Build.VERSION.SDK_INT>=21)
+        {
+            view.setVisibility(View.GONE);
+            toolbar.setElevation(10);
+        }
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

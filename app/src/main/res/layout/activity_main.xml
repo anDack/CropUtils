@@ -13,12 +13,17 @@
         android:background="@color/colorPrimary"
         toolbar:theme="@style/ToolbarTheme"
         toolbar:title="@string/app_name"
+
         toolbar:titleTextColor="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.Toolbar>
-
+    <View
+        android:id="@+id/shadow_view"
+        android:background="@drawable/tool_bar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"/>
     <ImageView
         android:id="@+id/ImageView"
         android:layout_weight="1"
