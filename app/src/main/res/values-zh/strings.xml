@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">图片切割助手</string>
-    <string name="choosePicZh">点击选择图片</string>
-    <string name="cut_nine">9图切割</string>
-    <string name="suit_cut">确定裁剪</string>
-</resources>
