@@ -1,17 +1,14 @@
 package com.andack.croputils;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Display;
@@ -30,9 +27,14 @@ import android.widget.Toast;
 import com.andack.croputils.Model.ImagePiece;
 import com.andack.croputils.Utils.ImageSave;
 import com.andack.croputils.Utils.ImageSplitter;
+import com.andack.croputils.Utils.Util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.iwf.photopicker.PhotoPicker;
+import me.iwf.photopicker.PhotoPreview;
 
 public class MainActivity extends CheckPermissionsActivity {
     private static final int IMAGE=1;
@@ -151,9 +153,13 @@ public class MainActivity extends CheckPermissionsActivity {
         ChoosePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,IMAGE);
+//                Intent intent=new Intent(Intent.ACTION_PICK,
+//                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent,IMAGE);
+                PhotoPicker.builder()
+                        .setPhotoCount(1)
+                        .setPreviewEnabled(false)
+                        .start(MainActivity.this);
                 ChoosePic.setVisibility(View.GONE);
                 CutPic.setVisibility(View.VISIBLE);
             }
@@ -200,17 +206,29 @@ public class MainActivity extends CheckPermissionsActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==IMAGE && resultCode== Activity.RESULT_OK && data!=null)
-        {
-            Uri selectedImage=data.getData();
-            String[] filePathColumns={MediaStore.Images.Media.DATA};
-            Cursor c=getContentResolver().query(selectedImage,filePathColumns,null,null,null);
-            c.moveToFirst();
-            int columnIndex=c.getColumnIndex(filePathColumns[0]);
-            String imagePath=c.getString(columnIndex);
-            showImage(imagePath);
-            c.close();
+        if (resultCode == RESULT_OK &&
+                (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE)) {
+            ArrayList<String> uri = null;
+            if (data != null) {
+                uri = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+            }
+            Uri uriLast = Uri.fromFile(new File(uri.get(0).toString()));
+            String path = Util.getRealFilePath(this, uriLast);
+//            bm = BitmapFactory.decodeFile(path);
+            showImage(path);
+//            imageView_choosed_image.setImageBitmap(bm);
         }
+//        if (requestCode==IMAGE && resultCode== Activity.RESULT_OK && data!=null)
+//        {
+//            Uri selectedImage=data.getData();
+//            String[] filePathColumns={MediaStore.Images.Media.DATA};
+//            Cursor c=getContentResolver().query(selectedImage,filePathColumns,null,null,null);
+//            c.moveToFirst();
+//            int columnIndex=c.getColumnIndex(filePathColumns[0]);
+//            String imagePath=c.getString(columnIndex);
+//            showImage(imagePath);
+//            c.close();
+//        }
     }
 
     private void showImage(String imagePath) {
